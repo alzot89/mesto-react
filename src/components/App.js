@@ -1,14 +1,13 @@
 import Header from './Header';
 import Main from './Main';
+import Footer from './Footer';
 
 function App() {
   return (
     <div className="app">
       <Header />
       <Main />
-      <footer className="footer">
-        <p className="footer__copyright">&copy; 2020 Mesto Russia</p>
-      </footer>
+      <Footer />
 
       <div className="popup popup_type_edit">
         <div className="popup__container popup__container_type_edit">
