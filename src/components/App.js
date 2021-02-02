@@ -1,13 +1,9 @@
-import logoPath from './images/header_logo.svg'
+import Header from './Header'
 
 function App() {
   return (
     <div className="app">
-      <header className="header">
-        <img className="header__logo" src={logoPath} alt="картинка: логотип" />
-      </header>
-
-
+      <Header />
       <main className="content">
 
         <section className="profile">
