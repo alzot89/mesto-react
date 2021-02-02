@@ -1,0 +1,19 @@
+.popup__input_type_link {
+margin-top: 10px;
+}
+
+.popup__input_type_link::placeholder {
+    font-size: 14px;
+    line-height: 1.21;
+    font-weight: 400;
+    color: #C4C4C4;
+}
+
+
+
+@media screen and (max-width: 620px) {
+    .popup__input_type_link::placeholder {
+        font-size: 12px;
+        line-height: 1.25;
+    }
+}

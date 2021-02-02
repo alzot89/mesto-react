@@ -1,0 +1,17 @@
+.popup__title {
+    margin: 0;
+    max-width: 330px;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 900;
+}
+
+@media screen and (max-width: 620px) {
+    .popup__title {
+        font-size: 18px;
+        line-height: 1.22;
+}
+
+}
+
+/* Не вполне понял на что нужно поменять line-height. В макете сказано indentical to box height, но что это значит я не смог найти*/

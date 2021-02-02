@@ -1,0 +1,20 @@
+.elements {
+    width: 100%;
+    padding-top: 57px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+@media (min-width: 620px) and (max-width: 881px) {
+    .elements {
+        width: 582px;
+        padding-top: 36px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .elements {
+        width: 282px;
+        padding-top: 36px;
+    }
+}
