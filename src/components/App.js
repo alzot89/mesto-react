@@ -75,19 +75,6 @@ function App() {
         }
       />
       <ImagePopup />
-      <template id="template-card">
-        <li className="card">
-          <button className="button card__trash" type="button" aria-label="корзина"></button>
-          <img className="card__image" src=" " alt=" " />
-          <div className="card__info">
-            <h3 className="card__title">жопа</h3>
-            <div className="card__like-container">
-              <button className="button card__like" type="button" aria-label="сердечко"></button>
-              <p className="card__like-amount"></p>
-            </div>
-          </div>
-        </li>
-      </template>
     </div >
   );
 }
