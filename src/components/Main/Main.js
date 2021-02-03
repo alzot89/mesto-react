@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../../utils/api';
+import Card from '../Card/Card'
 
 function Main(props) {
 
@@ -14,27 +15,12 @@ function Main(props) {
                 setUserName(data[0].name);
                 setUserDescription(data[0].about);
                 setUserAvatar(data[0].avatar);
-                setCards(
-                    Array.from(data[1]).map((card) => {
-                        return (
-                            <li className="card" key={card._id}>
-                                <button className="button card__trash" type="button" aria-label="корзина"></button>
-                                <img className="card__image" src={card.link} alt={card.name} />
-                                <div className="card__info">
-                                    <h3 className="card__title">{card.name}</h3>
-                                    <div className="card__like-container">
-                                        <button className="button card__like" type="button" aria-label="сердечко"></button>
-                                        <p className="card__like-amount">{card.likes.length}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        )
-                    }))
+                setCards(data[1])
             })
             .catch((err) => {
                 console.log(err)
             })
-    })
+    }, [])
 
     return (
         <main className="content">
@@ -58,7 +44,7 @@ function Main(props) {
 
             <section className="elements">
                 <ul className="elements__list">
-                    {cards}
+                    {cards.map((card) => { return (<Card card={card} key={card._id} />) })}
                 </ul>
             </section>
 

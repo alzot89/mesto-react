@@ -10,6 +10,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  // const [selectedCard, setSelectedCard] = useState(0);
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
@@ -23,10 +24,15 @@ function App() {
     setEditAvatarPopupOpen(true);
   }
 
+  // function handleCardClick() {
+  //   setSelectedCard()
+  // }
+
   function closeAllPopus() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
+    // setSelectedCard(0)
   }
   return (
     <div className="app">
