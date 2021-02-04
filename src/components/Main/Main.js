@@ -7,9 +7,11 @@ function Main(props) {
     const [userName, setUserName] = useState(' ');
     const [userDescription, setUserDescription] = useState(' ');
     const [userAvatar, setUserAvatar] = useState(' ');
-    const [cards, setCards] = useState([])
+    const [cards, setCards] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true);
         Promise.all([api.getUserData(), api.getCardsData()])
             .then((data) => {
                 setUserName(data[0].name);
@@ -19,6 +21,9 @@ function Main(props) {
             })
             .catch((err) => {
                 console.log(err)
+            })
+            .finally(() => {
+                setIsLoading(false);
             })
     }, [])
 
@@ -43,12 +48,13 @@ function Main(props) {
             </section>
 
             <section className="elements">
-                <ul className="elements__list">
-                    {cards.map((card) => { return (<Card card={card} key={card._id} />) })}
-                </ul>
+                {isLoading
+                    ? (<p style={{ color: 'white' }}>loading...</p>)
+                    : (<ul className="elements__list">
+                        {cards.map((card) => { return (<Card card={card} key={card._id} onCardClick={props.onCardClick} />) })}
+                    </ul>)}
             </section>
-
-        </main>
+        </main >
     )
 }
 

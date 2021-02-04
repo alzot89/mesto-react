@@ -10,7 +10,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-  // const [selectedCard, setSelectedCard] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(0);
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
@@ -24,20 +24,20 @@ function App() {
     setEditAvatarPopupOpen(true);
   }
 
-  // function handleCardClick() {
-  //   setSelectedCard()
-  // }
+  function handleCardClick(card) {
+    setSelectedCard(card)
+  }
 
   function closeAllPopus() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
-    // setSelectedCard(0)
+    setSelectedCard(0)
   }
   return (
     <div className="app">
       <Header />
-      <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} />
+      <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
       <Footer />
       <PopupWithForm name='edit' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopus}
         children={
@@ -80,7 +80,7 @@ function App() {
           </div>
         }
       />
-      <ImagePopup />
+      <ImagePopup card={selectedCard} onClose={closeAllPopus} />
     </div >
   );
 }

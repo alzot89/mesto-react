@@ -10,16 +10,6 @@ function PopupWithForm(props) {
                 </form>
             </div>
         </div>
-        // <div className="popup popup_type_confirm">
-        //     <div className="popup__container popup__container_type_confirm">
-        //         <button className="button popup__close" type="button" aria-label="кнопка: подтвержение"></button>
-        //         <h2 className="popup__title">Вы уверены?</h2>
-        //         <form className="popup__form popup__form_type_confirm" name="form">
-        //             <button className="button popup__save popup__save_type_confirm"
-        //                 aria-label="кнопка: подтверждение">Да</button>
-        //         </form>
-        //     </div>
-        // </div>
     )
 }
 
