@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import Card from '../Card/Card'
 
-function Main(props) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
     const [userName, setUserName] = useState(' ');
     const [userDescription, setUserDescription] = useState(' ');
@@ -33,25 +33,25 @@ function Main(props) {
             <section className="profile">
                 <div className="profile__image">
                     <div className="profile__overlay">
-                        <button className="button button_type_avatar" type="button" aria-label="кнопка: редактировать" onClick={props.onEditAvatar}></button>
+                        <button className="button button_type_avatar" type="button" aria-label="кнопка: редактировать" onClick={onEditAvatar}></button>
                     </div>
                     <img className="profile__avatar" src={userAvatar} alt="картинка: аватарка" />
                 </div>
                 <div className="profile__info">
                     <div className="profile__container">
                         <h1 className="profile__title">{userName}</h1>
-                        <button className="button button_type_edit" type="button" aria-label="кнопка: редактировать" onClick={props.onEditProfile}></button>
+                        <button className="button button_type_edit" type="button" aria-label="кнопка: редактировать" onClick={onEditProfile}></button>
                     </div>
                     <p className="profile__subtitle">{userDescription}</p>
                 </div>
-                <button className="button button_type_add" type="button" aria-label="кнопка: добавить" onClick={props.onAddPlace}></button>
+                <button className="button button_type_add" type="button" aria-label="кнопка: добавить" onClick={onAddPlace}></button>
             </section>
 
             <section className="elements">
                 {isLoading
                     ? (<p style={{ color: 'white' }}>loading...</p>)
                     : (<ul className="elements__list">
-                        {cards.map((card) => { return (<Card card={card} key={card._id} onCardClick={props.onCardClick} />) })}
+                        {cards.map((card) => { return (<Card card={card} key={card._id} onCardClick={onCardClick} />) })}
                     </ul>)}
             </section>
         </main >
