@@ -35,6 +35,14 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
             })
     }
 
+    function handleCardDelete(card) {
+        api.deleteCard(card._id)
+            .then(() => {
+                const newCards = cards.filter((c) => { return !(c._id === card._id) && c });
+                setCards(newCards)
+            })
+    }
+
     return (
         <main className="content">
 
@@ -59,7 +67,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
                 {isLoading
                     ? (<p style={{ color: 'white' }}>loading...</p>)
                     : (<ul className="elements__list">
-                        {cards.map((card) => { return (<Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={handleCardLike} />) })}
+                        {cards.map((card) => { return (<Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />) })}
                     </ul>)}
             </section>
         </main >
