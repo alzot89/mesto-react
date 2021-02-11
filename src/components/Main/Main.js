@@ -21,7 +21,19 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
             .finally(() => {
                 setIsLoading(false);
             })
-    }, [])
+    }, []);
+
+    function handleCardLike(card) {
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        api.changeLikeCardStatus(card._id, isLiked)
+            .then((newCard) => {
+                const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+                setCards(newCards);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
 
     return (
         <main className="content">
@@ -47,7 +59,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
                 {isLoading
                     ? (<p style={{ color: 'white' }}>loading...</p>)
                     : (<ul className="elements__list">
-                        {cards.map((card) => { return (<Card card={card} key={card._id} onCardClick={onCardClick} />) })}
+                        {cards.map((card) => { return (<Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={handleCardLike} />) })}
                     </ul>)}
             </section>
         </main >

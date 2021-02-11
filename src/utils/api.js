@@ -89,30 +89,30 @@ class Api {
             })
     }
 
-    putLike(cardId) {
-        return fetch(`${this._address}/${this._groupId}/cards/likes/${cardId}`, {
-            method: 'PUT',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => {
-                return this._checkResponseStatus(res)
+    changeLikeCardStatus(cardId, isLiked) {
+        if (!isLiked) {
+            return fetch(`${this._address}/${this._groupId}/cards/likes/${cardId}`, {
+                method: 'PUT',
+                headers: {
+                    authorization: this._token,
+                    'Content-Type': 'application/json'
+                }
             })
-    }
-
-    deleteLike(cardId) {
-        return fetch(`${this._address}/${this._groupId}/cards/likes/${cardId}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => {
-                return this._checkResponseStatus(res)
+                .then((res) => {
+                    return this._checkResponseStatus(res)
+                })
+        } else {
+            return fetch(`${this._address}/${this._groupId}/cards/likes/${cardId}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: this._token,
+                    'Content-Type': 'application/json'
+                }
             })
+                .then((res) => {
+                    return this._checkResponseStatus(res)
+                })
+        }
     }
 
     _checkResponseStatus(res) {
