@@ -3,7 +3,8 @@ import Main from './Main/Main';
 import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm';
 import ImagePopup from './ImagePopup/ImagePopup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import api from '../utils/api';
 
 function App() {
 
@@ -12,6 +13,18 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    api.getUserData
+      .then((data) = {
+        setCurrentUser(data);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
