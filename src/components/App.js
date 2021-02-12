@@ -2,6 +2,7 @@ import Header from './Header/Header';
 import Main from './Main/Main';
 import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm';
+import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
 import ImagePopup from './ImagePopup/ImagePopup';
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
@@ -44,6 +45,18 @@ function App() {
     setImagePopupOpen(true)
   }
 
+  function handleUpdateUser(userData) {
+    api.changeUserData(userData)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopus();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+  }
+
   function closeAllPopus() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -57,22 +70,7 @@ function App() {
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
         <Footer />
-        <PopupWithForm name='edit' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopus}
-          children={
-            <>
-              <div className="popup__input-container">
-                <input id="name-input" className="popup__input popup__input_type_name" type="text" maxLength="40"
-                  minLength="2" name="name" value="" placeholder="Имя" required readOnly />
-                <span id="name-input-error" className="error"></span>
-              </div>
-              <div className="popup__input-container">
-                <input id="about-input" className="popup__input popup__input_type_about" type="text" maxLength="200"
-                  minLength="2" name="about" value="" placeholder="О себе" required readOnly />
-                <span id="about-input-error" className="error"></span>
-              </div>
-            </>
-          }
-        />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopus} onUpdateUser={handleUpdateUser} />
         <PopupWithForm name='add' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopus}
           children={
             <>

@@ -34,10 +34,7 @@ class Api {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                name: data.name,
-                about: data.about
-            })
+            body: JSON.stringify(data)
         })
             .then((res) => {
                 return this._checkResponseStatus(res)
