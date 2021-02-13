@@ -57,17 +57,14 @@ class Api {
             })
     }
 
-    setCardData(data) {
+    setCardData(newCard) {
         return fetch(`${this._address}/${this._groupId}/cards`, {
             method: 'POST',
             headers: {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                name: data.name,
-                link: data.link
-            })
+            body: JSON.stringify(newCard)
         })
             .then((res) => {
                 return this._checkResponseStatus(res)

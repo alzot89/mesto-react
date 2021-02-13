@@ -15,14 +15,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         });
     }
 
-    // function handleNameInputChange(e) {
-    //     setName(e.target.value)
-    // }
-
-    // function handleDescriptionInputChange(e) {
-    //     setDescription(e.target.value)
-    // }
-
     function handleInputChange(e) {
         if (e.target.name === "name") {
             setName(e.target.value)

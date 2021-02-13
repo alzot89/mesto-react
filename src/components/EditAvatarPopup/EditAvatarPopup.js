@@ -14,11 +14,9 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         avatarRef.current.vaule = e.target.value
     }
 
-    const popupIsOpen = isOpen === true;
-
     useEffect(() => {
         avatarRef.current.value = ''
-    }, [popupIsOpen])
+    }, [isOpen])
 
     return (
         <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}

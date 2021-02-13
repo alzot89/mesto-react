@@ -1,7 +1,7 @@
 import Header from './Header/Header';
 import Main from './Main/Main';
 import Footer from './Footer/Footer';
-import PopupWithForm from './PopupWithForm/PopupWithForm';
+import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup'
 import ImagePopup from './ImagePopup/ImagePopup';
@@ -17,6 +17,8 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     api.getUserData()
@@ -27,6 +29,43 @@ function App() {
         console.log(err)
       })
   }, [])
+
+  useEffect(() => {
+    setIsLoading(true);
+    api.getCardsData()
+      .then((data) => {
+        setCards(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }, []);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    api.changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+        setCards(newCards);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((c) => { return !(c._id === card._id) && c });
+        setCards(newCards)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
 
   function handleEditProfileClick() {
@@ -68,6 +107,17 @@ function App() {
       })
   }
 
+  function handleAddPlaceSubmit(newCard) {
+    api.setCardData(newCard)
+      .then((data) => {
+        setCards([data, ...cards])
+        closeAllPopus()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   function closeAllPopus() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -79,25 +129,11 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Header />
-        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
+        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick} isLoading={isLoading} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
         <Footer />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopus} onUpdateUser={handleUpdateUser} />
-        <PopupWithForm name='add' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopus}
-          children={
-            <>
-              <div className="popup__input-container">
-                <input id="image-input" className="popup__input popup__input_type_image" type="text" name="name"
-                  value="" placeholder="Название" minLength="2" maxLength="30" required readOnly />
-                <span id="image-input-error" className="error"></span>
-              </div>
-              <div className="popup__input-container">
-                <input id="link-input" className="popup__input popup__input_type_link" type="url" name="link" value=""
-                  placeholder="Ссылка на картинку" required readOnly />
-                <span id="link-input-error" className="error"></span>
-              </div>
-            </>
-          }
-        />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopus} onAddPlace={handleAddPlaceSubmit} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopus} onUpdateAvatar={handleUpdateAvatar} />
         <ImagePopup card={selectedCard} onClose={closeAllPopus} isOpen={isImagePopupOpen} />
       </div >
