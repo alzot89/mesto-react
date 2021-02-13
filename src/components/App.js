@@ -5,6 +5,7 @@ import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup'
 import ImagePopup from './ImagePopup/ImagePopup';
+import ConfirmPopup from './ConfirmPopup/ConfirmPopup';
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
@@ -14,6 +15,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isConfirmPopupOpen, setConfirmPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -56,11 +58,12 @@ function App() {
       })
   }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
+  function handleCardDelete() {
+    api.deleteCard(selectedCard._id)
       .then(() => {
-        const newCards = cards.filter((c) => { return !(c._id === card._id) && c });
+        const newCards = cards.filter((c) => { return !(c._id === selectedCard._id) && c });
         setCards(newCards)
+        closeAllPopus()
       })
       .catch((err) => {
         console.log(err)
@@ -86,6 +89,7 @@ function App() {
   }
 
   function handleUpdateUser(userData) {
+    setIsLoading(true)
     api.changeUserData(userData)
       .then((data) => {
         setCurrentUser(data);
@@ -94,9 +98,13 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   function handleUpdateAvatar(avatar) {
+    setIsLoading(true)
     api.changeAvatar(avatar)
       .then((data) => {
         setCurrentUser(data);
@@ -105,9 +113,13 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   function handleAddPlaceSubmit(newCard) {
+    setIsLoading(true)
     api.setCardData(newCard)
       .then((data) => {
         setCards([data, ...cards])
@@ -116,6 +128,14 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
+  function handleConfirmDeletion(card) {
+    setConfirmPopupOpen(true);
+    setSelectedCard(card)
   }
 
   function closeAllPopus() {
@@ -124,17 +144,19 @@ function App() {
     setEditAvatarPopupOpen(false);
     setSelectedCard({});
     setImagePopupOpen(false);
+    setConfirmPopupOpen(false)
   }
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick} isLoading={isLoading} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
+          onCardClick={handleCardClick} isLoading={isLoading} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmDeletion} />
         <Footer />
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopus} onUpdateUser={handleUpdateUser} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopus} onAddPlace={handleAddPlaceSubmit} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopus} onUpdateAvatar={handleUpdateAvatar} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopus} onUpdateUser={handleUpdateUser} isLoading={isLoading} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopus} onAddPlace={handleAddPlaceSubmit} isLoading={isLoading} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopus} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} />
+        <ConfirmPopup isOpen={isConfirmPopupOpen} onClose={closeAllPopus} onConfirmDeletion={handleCardDelete} />
         <ImagePopup card={selectedCard} onClose={closeAllPopus} isOpen={isImagePopupOpen} />
       </div >
     </CurrentUserContext.Provider>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm'
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
     const [name, setName] = useState('');
     const [link, setLink] = useState('')
 
@@ -24,7 +24,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     }, [isOpen])
 
     return (
-        <PopupWithForm name='add' title='Новое место' isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}
+        <PopupWithForm name='add' title='Новое место' button={isLoading ? 'Создание...' : 'Создать'} isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}
             children={
                 <>
                     <div className="popup__input-container">
