@@ -3,6 +3,7 @@ import Main from './Main/Main';
 import Footer from './Footer/Footer';
 import PopupWithForm from './PopupWithForm/PopupWithForm';
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
+import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup'
 import ImagePopup from './ImagePopup/ImagePopup';
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
@@ -54,7 +55,17 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
+  }
 
+  function handleUpdateAvatar(avatar) {
+    api.changeAvatar(avatar)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopus()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   function closeAllPopus() {
@@ -87,15 +98,7 @@ function App() {
             </>
           }
         />
-        <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopus}
-          children={
-            <div className="popup__input-container">
-              <input id="avatar-input" className="popup__input popup__input_type_avatar" type="url" name="avatar"
-                value="" placeholder="Ссылка на картинку" required readOnly />
-              <span id="avatar-input-error" className="error"></span>
-            </div>
-          }
-        />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopus} onUpdateAvatar={handleUpdateAvatar} />
         <ImagePopup card={selectedCard} onClose={closeAllPopus} isOpen={isImagePopupOpen} />
       </div >
     </CurrentUserContext.Provider>
