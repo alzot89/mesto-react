@@ -27,28 +27,19 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    api.getUserData()
-      .then((data) => {
-        setCurrentUser(data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
-  useEffect(() => {
     setIsLoading(true);
-    api.getCardsData()
+    Promise.all([api.getUserData(), api.getCardsData()])
       .then((data) => {
-        setCards(data)
+        setCurrentUser(data[0]);
+        setCards(data[1])
       })
       .catch((err) => {
         console.log(err)
       })
       .finally(() => {
-        setIsLoading(false);
+        setIsLoading(false)
       })
-  }, []);
+  }, [])
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);

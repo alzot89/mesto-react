@@ -5,32 +5,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
     const nameRef = useRef();
     const linkRef = useRef();
     const [error, setError] = useState({});
-    const [validity, setValidity] = useState({
-        name: true,
-        link: true
-    })
+    const [validity, setValidity] = useState({})
 
     function handleSubmit(e) {
         e.preventDefault();
         onAddPlace({
             name: nameRef.current.value,
             link: linkRef.current.value
-        })
-    }
-
-    function handleChange(e) {
-        const name = e.target.name
-        setError((prevValue) => {
-            return {
-                ...prevValue,
-                [name]: e.target.validationMessage
-            }
-        })
-        setValidity((prevValue) => {
-            return {
-                ...prevValue,
-                [name]: e.target.validity.valid
-            }
         })
     }
 
@@ -52,6 +33,22 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
             }
         })
     }, [isOpen])
+
+    function handleChange(e) {
+        const name = e.target.name
+        setError((prevValue) => {
+            return {
+                ...prevValue,
+                [name]: e.target.validationMessage
+            }
+        })
+        setValidity((prevValue) => {
+            return {
+                ...prevValue,
+                [name]: e.target.validity.valid
+            }
+        })
+    }
 
     return (
         <PopupWithForm name='add' title='Новое место' button={isLoading ? 'Создание...' : 'Создать'} isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}
