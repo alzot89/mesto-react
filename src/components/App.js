@@ -1,11 +1,11 @@
-import Header from './Header/Header';
-import Main from './Main/Main';
-import Footer from './Footer/Footer';
-import AddPlacePopup from './AddPlacePopup/AddPlacePopup';
-import EditProfilePopup from './EditProfilePopup/EditProfilePopup'
-import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup'
-import ImagePopup from './ImagePopup/ImagePopup';
-import ConfirmPopup from './ConfirmPopup/ConfirmPopup';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import AddPlacePopup from './AddPlacePopup';
+import EditProfilePopup from './EditProfilePopup'
+import EditAvatarPopup from './EditAvatarPopup'
+import ImagePopup from './ImagePopup';
+import ConfirmPopup from './ConfirmPopup';
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
