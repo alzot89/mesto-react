@@ -64,7 +64,10 @@ class Api {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newCard)
+            body: JSON.stringify({
+                name: newCard.name,
+                link: newCard.link
+            })
         })
             .then((res) => {
                 return this._checkResponseStatus(res)

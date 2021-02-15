@@ -18,7 +18,11 @@ function App() {
   const [isConfirmPopupOpen, setConfirmPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [isImagePopupOpen, setImagePopupOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    about: '',
+    avatar: ''
+  });
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
