@@ -67,23 +67,20 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     }
 
     return (
-        <PopupWithForm name='edit' title='Редактировать профиль' button={isLoading ? 'Сохранение...' : 'Сохранить'} isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}
-            children={
-                <>
-                    <div className="popup__input-container">
-                        <input id="name-input" className={`popup__input popup__input_type_name ${!validity.name && 'popup__input_state_invalid'} `} type="text" maxLength="40"
-                            minLength="2" name="name" value={inputValue.name} placeholder="Имя" required onChange={handleInputChange} />
-                        <span id="name-input-error" className="error">{error.name}</span>
-                    </div>
-                    <div className="popup__input-container">
-                        <input id="about-input" className={`popup__input popup__input_type_about ${!validity.description && 'popup__input_state_invalid'} `} type="text" maxLength="200"
-                            minLength="2" name="description" value={inputValue.description} placeholder="О себе" required onChange={handleInputChange} />
-                        <span id="about-input-error" className="error">{error.description}</span>
-                    </div>
-                </>
-            }
-        />
-
+        <PopupWithForm name='edit' title='Редактировать профиль' button={isLoading ? 'Сохранение...' : 'Сохранить'} isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
+            <>
+                <div className="popup__input-container">
+                    <input id="name-input" className={`popup__input popup__input_type_name ${!validity.name && 'popup__input_state_invalid'} `} type="text" maxLength="40"
+                        minLength="2" name="name" value={inputValue.name} placeholder="Имя" required onChange={handleInputChange} />
+                    <span id="name-input-error" className="error">{error.name}</span>
+                </div>
+                <div className="popup__input-container">
+                    <input id="about-input" className={`popup__input popup__input_type_about ${!validity.description && 'popup__input_state_invalid'} `} type="text" maxLength="200"
+                        minLength="2" name="description" value={inputValue.description} placeholder="О себе" required onChange={handleInputChange} />
+                    <span id="about-input-error" className="error">{error.description}</span>
+                </div>
+            </>
+        </PopupWithForm>
     )
 }
 
