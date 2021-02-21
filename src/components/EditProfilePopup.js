@@ -13,27 +13,29 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 
     // eslint-disable-next-line
     useEffect(() => {
-        setInputValue((prevValue) => {
-            return {
-                ...prevValue,
-                name: currentUser.name,
-                description: currentUser.about
-            }
-        })
-        setError((prevValue) => {
-            return {
-                ...prevValue,
-                name: '',
-                description: ''
-            }
-        })
-        setValidity((prevValue) => {
-            return {
-                ...prevValue,
-                name: true,
-                description: true
-            }
-        })
+        if (isOpen) {
+            setInputValue((prevValue) => {
+                return {
+                    ...prevValue,
+                    name: currentUser.name,
+                    description: currentUser.about
+                }
+            })
+            setError((prevValue) => {
+                return {
+                    ...prevValue,
+                    name: '',
+                    description: ''
+                }
+            })
+            setValidity((prevValue) => {
+                return {
+                    ...prevValue,
+                    name: true,
+                    description: true
+                }
+            })
+        }
     }, [isOpen])
 
     function handleSubmit(e) {
@@ -65,6 +67,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
             }
         })
     }
+
 
     return (
         <PopupWithForm name='edit' title='Редактировать профиль' button={isLoading ? 'Сохранение...' : 'Сохранить'} isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>

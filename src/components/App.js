@@ -58,7 +58,7 @@ function App() {
       .then(() => {
         const newCards = cards.filter((c) => { return !(c._id === selectedCard._id) && c });
         setCards(newCards)
-        closeAllPopus()
+        closeAllPopups()
       })
       .catch((err) => {
         console.log(err)
@@ -88,7 +88,7 @@ function App() {
     api.changeUserData(userData)
       .then((data) => {
         setCurrentUser(data);
-        closeAllPopus();
+        closeAllPopups();
       })
       .catch((err) => {
         console.log(err)
@@ -103,7 +103,7 @@ function App() {
     api.changeAvatar(avatar)
       .then((data) => {
         setCurrentUser(data);
-        closeAllPopus()
+        closeAllPopups()
       })
       .catch((err) => {
         console.log(err)
@@ -118,7 +118,7 @@ function App() {
     api.setCardData(newCard)
       .then((data) => {
         setCards([data, ...cards])
-        closeAllPopus()
+        closeAllPopups()
       })
       .catch((err) => {
         console.log(err)
@@ -133,7 +133,7 @@ function App() {
     setSelectedCard(card)
   }
 
-  function closeAllPopus() {
+  function closeAllPopups() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
@@ -141,6 +141,7 @@ function App() {
     setImagePopupOpen(false);
     setConfirmPopupOpen(false)
   }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -148,11 +149,11 @@ function App() {
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick} isLoading={isLoading} cards={cards} onCardLike={handleCardLike} onCardDelete={handleConfirmDeletion} />
         <Footer />
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopus} onUpdateUser={handleUpdateUser} isLoading={isLoading} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopus} onAddPlace={handleAddPlaceSubmit} isLoading={isLoading} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopus} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} />
-        <ConfirmPopup isOpen={isConfirmPopupOpen} onClose={closeAllPopus} onConfirmDeletion={handleCardDelete} />
-        <ImagePopup card={selectedCard} onClose={closeAllPopus} isOpen={isImagePopupOpen} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isLoading={isLoading} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} isLoading={isLoading} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isLoading={isLoading} />
+        <ConfirmPopup isOpen={isConfirmPopupOpen} onClose={closeAllPopups} onConfirmDeletion={handleCardDelete} />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpen={isImagePopupOpen} />
       </div >
     </CurrentUserContext.Provider>
   );

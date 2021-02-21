@@ -16,22 +16,24 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
     }
 
     useEffect(() => {
-        nameRef.current.value = '';
-        linkRef.current.value = ''
-        setError((prevValue) => {
-            return {
-                ...prevValue,
-                name: '',
-                link: ''
-            }
-        })
-        setValidity((prevValue) => {
-            return {
-                ...prevValue,
-                name: true,
-                link: true
-            }
-        })
+        if (isOpen) {
+            nameRef.current.value = '';
+            linkRef.current.value = ''
+            setError((prevValue) => {
+                return {
+                    ...prevValue,
+                    name: '',
+                    link: ''
+                }
+            })
+            setValidity((prevValue) => {
+                return {
+                    ...prevValue,
+                    name: true,
+                    link: true
+                }
+            })
+        }
     }, [isOpen])
 
     function handleChange(e) {
